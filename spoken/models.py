@@ -68,8 +68,11 @@ class Company(models.Model):
 
 class Jobfair(models.Model):
 	jobfair_title = models.CharField(max_length=255)
-	jobfair_date = models.DateField()
+	jobfair_start_date = models.DateField(blank=True,null=True)
+	jobfair_end_date = models.DateField(blank=True,null=True)
 	jobfair_desc = models.TextField()
+	num_students_registered = models.IntegerField(default=0)
+	num_students_placed = models.IntegerField(default=0)
 	know_more_link = models.CharField(max_length=300)
 	updated = models.DateField(auto_now=True)
 	companies = models.ManyToManyField(Company)
@@ -113,3 +116,5 @@ class MediaTestimonials(models.Model):
 
     def __str__(self):
         return self.path
+
+

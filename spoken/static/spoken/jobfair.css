@@ -1,0 +1,209 @@
+:root{
+      --footer-color:#002649; 
+      --white:#fff;
+      --light :#F5F8FD ; 
+      --dark :#02073F ;
+      --main-font-color :#413e66 ;
+      --shadow : 0 1px 10px rgb(104,104,104,0.5);
+      --btn-color:#18B1DC;  /*rgb(24,177,220)*/
+      --line-color:#C9D4F6;
+      --font:"Open Sans", sans-serif;
+      --section-padding:0 10%;
+      --orange:#EC6C06;
+
+}
+
+/*--------------------------------------------------------------
+# Jobfair
+--------------------------------------------------------------*/
+
+#schedule {
+  padding: 60px 0 60px 0;
+  color: black;
+}
+
+#schedule .nav-tabs {
+  
+  text-align: center;
+  margin: auto;
+  display: block;
+  border-bottom: 0;
+  margin-bottom: 30px;
+  
+}
+
+#schedule .nav-tabs li {
+  display: inline-block;
+  margin-bottom: 0;
+  
+}
+
+#schedule .nav-tabs a {
+ 
+  border-radius: 0px;
+  font-weight: 600;
+
+  border: 1px solid #ebebed;
+  color: #000000;
+  padding: 10px 50px;
+}
+
+#schedule .nav-tabs a.active {
+  /*background-color: #f82249;*/
+  background-color: var(--orange);
+  color: #fff;
+
+}
+  
+#schedule .sub-heading {
+  text-align: center;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0 auto 30px auto;
+}
+
+#schedule .tab-pane {
+  transition: ease-in-out .2s;
+}
+
+#schedule .schedule-item {
+  border: 1px solid rgb(239,232,232);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  transition: background-color ease-in-out 0.3s;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  color: black;
+}
+
+#schedule .schedule-item:hover {
+  background-color: #f6f7fd/*#ffa;*/
+}
+
+#schedule .schedule-item time {
+  padding-bottom: 5px;
+  display: inline-block;
+
+}
+
+#schedule .schedule-item .speaker {
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 50%;
+  float: left;
+  margin: 0 10px 10px 0;
+}
+
+#schedule .schedule-item .speaker img {
+  height: 100%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  margin-left: 50%;
+  transition: all ease-in-out 0.3s;
+}
+
+#schedule .schedule-item h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+#schedule .schedule-item h4 span {
+  font-style: italic;
+  color: #19328e;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+#schedule .schedule-item p {
+  /*font-style: italic;*/
+  color: rgb(0,0,0,0.8);
+  margin-bottom: 0;
+}
+
+/*.section-with-bg {
+  background-color: #f6f7fd;
+}*/
+
+.nav-tabs > li > a {
+    border-color: # ;
+}
+
+#job_fair{
+
+  color: black;
+}
+
+#schedule div > a {
+  border: 0px solid green;
+}
+
+
+.dropdown-menu .dropdown-item.dd{
+  border: 10px solid green;
+}
+
+a.dd{
+
+  border: 10px solid green;
+}
+
+div+a{
+  border: 1px solid green;
+
+}
+
+h3{
+  text-align: left;
+}
+#event_date{
+  line-height: 1.5rem;
+  text-align: center;
+  /*size: 0.8rem;*/
+}
+.title{
+ /*color: var(--orange);*/
+ color: var(--dark);
+ font-size: 0.5rem;
+}
+.content{
+  line-height: 1.5rem;
+}
+.content h6 {
+  /*font-weight:bold;*/
+  font-size: 0.9rem;
+  color: var(--dark);
+  text-decoration: underline;
+}
+
+.content p {
+  /*font-weight:bold;*/
+  font-size: 0.9rem;
+  /*font-family: "Open Sans", sans-serif;*/
+  text-decoration: none;
+}
+
+.date{
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+
+.content-date i{
+  margin-bottom:25px;
+  color :var(--orange);
+    font-size: 1.2rem;
+}
+.content i{
+  margin-bottom:10px;
+  font-size: 1.2rem;
+  color :var(--orange);
+
+}
+.content .link{
+  float: right;
+  color: var(--dark);
+}

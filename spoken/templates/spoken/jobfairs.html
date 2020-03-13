@@ -1,0 +1,184 @@
+
+{%extends "base.html"%}
+{% load static %}
+{% block css  %}
+<link rel="stylesheet" type="text/css" href="{% static '/spoken/jobfair.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div>	
+	<section id="schedule" class="section-with-bg">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h2>Job Fair Information</h2>
+          <p>Here is the schedule of upcoming and past events.</p>
+        </div>
+
+         <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" role="tab" data-toggle="tab" onclick="getFilteredJobFairs('all')" >All</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" role="tab" data-toggle="tab" onclick="getFilteredJobFairs('upcoming')">Upcoming</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" role="tab" data-toggle="tab" onclick="getFilteredJobFairs('2020')">2020</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" role="tab" data-toggle="tab" onclick="getFilteredJobFairs('2019')">2019</a>
+          </li>
+        </ul>
+
+        <h3 class="sub-heading" id="year_info"></h3> <!--check-->
+        <hr>
+        <div class="tab-content row justify-content-center">
+          <!-- Schdule Day 1 -->
+          <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="job_info_pane">        
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+{% endblock content %}
+
+
+{% block script %}
+<script type="text/javascript">
+var all_jobfairs_list =[];
+var dict = {};
+var event_date ='';
+$(function() {
+	//get year_list
+  var d = new Date();
+  var current_year = d.getFullYear();
+   
+    $.ajax({
+    type: 'GET',
+    url: '/api/jobfairs',
+    success: function(data) {
+        
+        $.each(data,function(i, jobfair){
+          event_date = jobfair.jobfair_start_date;
+          key = event_date.slice(0,4);  
+         
+          if (key in dict ) {
+            dict[key].push(jobfair);
+          }else{
+            dict[key]= [];
+            dict[key].push(jobfair);
+          };
+         
+
+          all_jobfairs_list.push(jobfair);
+          
+        });
+        getFilteredJobFairs('all');
+    }
+});
+
+});
+
+function getFilteredJobFairs(id){
+  var s ='';
+  var jobfair_list = [];
+  
+  if (id=='all') {
+   //check for all
+   jobfair_list = all_jobfairs_list;
+
+} else if (id=='upcoming') {
+  //check for upcoming
+  var today = new Date();
+  var y = today.getFullYear();
+  var y = y.toString();
+ 
+  var temp_list = dict[y]; 
+ 
+
+  for (var i = temp_list.length - 1; i >= 0; i--) {
+  	var d = new Date(temp_list[i].event_date);
+    if (new Date(temp_list[i].jobfair_start_date) > today) {
+      jobfair_list.push(temp_list[i]);
+    }
+  }
+} else {
+  //check for year
+  jobfair_list = dict[id];
+  
+}
+  //check if list is empty
+  if (jobfair_list) {
+    for (var i = jobfair_list.length - 1; i >= 0; i--) {
+
+    	if (jobfair_list[i].jobfair_start_date==jobfair_list[i].jobfair_end_date) {
+    		s += ` <div class=\"row schedule-item\" onclick=\"window.location.href = \'https://stackoverflow.com/questions/27715582/clickable-div-that-redirect-me-to-another-html-page\';\">
+              <div class=\"col-md-2 text-center content-date \"  id=\"event_date\">`
+               +`<div><i class="far fa-calendar-alt"></i></div>`
+              
+              +`<div class="date">`+
+              jobfair_list[i].jobfair_start_date+
+              `</div>`+ 
+              `</div>
+              <div class=\"col-md-10 content\">
+              	<h4 class=\"title\">`+jobfair_list[i].jobfair_title+`</h4>
+                <h6 id=\"companies\">Companies</h6>
+                <p>`+getCompanyNames(jobfair_list[i].companies)+`</p>
+                <p id=\"student_participated\"><i class="fas fa-users"></i> Students Participated :`+jobfair_list[i].num_students_registered+` </p>
+                <p id=\"student_placed\"><i class="fas fa-briefcase"></i>Students Placed :`+jobfair_list[i].num_students_placed+`</p>
+              </div>
+            </div>
+            `; 
+
+    	}else{
+    		s += ` <div class=\"row schedule-item\" onclick=\"window.location.href = \'https://stackoverflow.com/questions/27715582/clickable-div-that-redirect-me-to-another-html-page\';\">
+              <div class=\"col-md-2 text-center content-date \"  id=\"event_date\">`
+               +`<div><i class="far fa-calendar-alt"></i></div>`
+              
+              +`<div class="date">`+
+              jobfair_list[i].jobfair_start_date+
+              `</div>`+ 
+              `-` +
+              `<div class="date">`+
+              jobfair_list[i].jobfair_end_date+
+              `</div>`+
+
+              `</div>
+              <div class=\"col-md-10 content\">
+              	<h4 class=\"title\">`+jobfair_list[i].jobfair_title+`</h4>
+                <h6 id=\"companies\">Companies</h6>
+                <p>`+getCompanyNames(jobfair_list[i].companies)+`</p>
+                <p id=\"student_participated\"><i class="fas fa-users"></i> Students Participated :`+jobfair_list[i].num_students_registered+` </p>
+                <p id=\"student_placed\"><i class="fas fa-briefcase"></i> Students Placed :`+jobfair_list[i].num_students_placed+`</p>
+                <p class="link"><a href="#">know more</a></p>
+              </div>
+            </div>
+            `; 
+    	}
+
+
+     
+  }
+  }else{
+    s = `<p> No Information on Job Fairs. </p>`
+  }
+  document.getElementById("job_info_pane").innerHTML = s;
+  // document.getElementById("year_info").innerHTML = id+' Jobfairs Info';
+};
+
+function getCompanyNames(lst_company){
+    var s = ''
+    for (var i = lst_company.length - 1; i >= 0; i--) {
+       s +=lst_company[i].name ;
+
+       if (i!=0) {
+       	s+='  ,  ';
+       } 
+     } 
+     return s;
+};
+
+</script>
+
+
+
+{% endblock script %}
